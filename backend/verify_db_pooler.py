@@ -6,7 +6,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from sqlalchemy import text
 from app.core.database import engine
-from app.models.paper_trading import PaperTradingAccount
+from app.models.paper_trading import PaperPortfolio
 
 def verify_all():
     print("Starting database verification...")
@@ -15,7 +15,7 @@ def verify_all():
         with engine.connect() as conn:
             # 1. Basic connectivity
             result = conn.execute(text("SELECT 1")).scalar()
-            print(f"✅ Basic Connectivity: OK (Result: {result})")
+            print(f"[OK] Basic Connectivity: OK (Result: {result})")
 
             # 2. pgvector verification
             # Verify the extension exists
@@ -23,9 +23,9 @@ def verify_all():
                 "SELECT extname FROM pg_extension WHERE extname = 'vector'"
             )).fetchone()
             if vector_check:
-                print("✅ pgvector Extension: OK (Installed and Active)")
+                print("[OK] pgvector Extension: OK (Installed and Active)")
             else:
-                print("❌ pgvector Extension: MISSING")
+                print("[X] pgvector Extension: MISSING")
                 
             # 3. Paper Trading Loop Table Access
             # We attempt to query the table just to ensure it exists and is accessible
@@ -34,15 +34,15 @@ def verify_all():
                 # Limit 1 just to see if table is accessible
                 from sqlalchemy.orm import Session
                 with Session(engine) as session:
-                    session.query(PaperTradingAccount).limit(1).all()
-                print("✅ Paper Trading DB Access: OK")
+                    session.query(PaperPortfolio).limit(1).all()
+                print("[OK] Paper Trading DB Access: OK")
             except Exception as e:
-                print(f"❌ Paper Trading DB Access Failed: {e}")
+                print(f"[X] Paper Trading DB Access Failed: {e}")
                 
-            print("\n🎉 All database connection tests completed!")
+            print("\n[OK] All database connection tests completed!")
 
     except Exception as e:
-        print(f"\n❌ Database connection failed!\nError Details: {e}")
+        print(f"\n[X] Database connection failed!\nError Details: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
