@@ -8,6 +8,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,6 +52,7 @@ export default function LoginPage() {
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
+          {error && <div className="p-3 text-sm text-red-400 bg-red-500/10 rounded-lg border border-red-500/20">{error}</div>}
           <div>
             <label className="block text-sm font-medium text-slate-300 mb-1">Email</label>
             <div className="relative">
