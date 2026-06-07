@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: marketpulse-backend
+    env: docker
+    dockerfilePath: ./Dockerfile.backend
+    region: oregon # or your preferred region
+    plan: starter # optional
+    envVars:
+      - key: PORT
+        value: "8080"
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        sync: false
+      - key: ALPHA_VANTAGE_API_KEY
+        sync: false
+      - key: FINNHUB_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: "gpt-4o-mini"
+      - key: OPENAI_EMBEDDING_MODEL
+        value: "text-embedding-3-large"
+      - key: BACKEND_CORS_ORIGINS
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
