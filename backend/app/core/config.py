@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     # Redis
     REDIS_HOST: str = os.getenv("REDIS_HOST", "localhost")
     REDIS_PORT: int = int(os.getenv("REDIS_PORT", 6379))
-    REDIS_URL: str = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
+    REDIS_URL: str = os.getenv("REDIS_URL", f"redis://{os.getenv('REDIS_HOST', 'localhost')}:{os.getenv('REDIS_PORT', 6379)}/0")
     
     # APIs
     ALPHA_VANTAGE_API_KEY: str = os.getenv("ALPHA_VANTAGE_API_KEY", "demo")
