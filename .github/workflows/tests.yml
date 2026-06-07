@@ -50,4 +50,7 @@ jobs:
         REDIS_HOST: localhost
         PYTHONPATH: ./backend
       run: |
+        cd backend
+        alembic upgrade head
+        cd ..
         pytest tests/
